@@ -6,11 +6,14 @@ import java.awt.event.*;
 public class GridPanel extends JPanel 
 {
    private final int GRID_SIZE = 4;
+   private final String FONT = "Arial";
+   private final int FONT_SIZE = 26;
 
    private JButton[][] grid;
    private JLabel score;
    private JPanel scorePanel;
    private JPanel gridPanel;
+   private JButton newGame;
 
    public GridPanel()
    {
@@ -22,8 +25,10 @@ public class GridPanel extends JPanel
       scorePanel = new JPanel();
       scorePanel.setLayout(new BorderLayout());
       scorePanel.setBackground(new Color(204, 206, 204));
-      score = new JLabel("Score: 2048");
+      score = new JLabel("Score: 0");
+      newGame = new JButton("New Game");
       scorePanel.add(score);
+      scorePanel.add(newGame, BorderLayout.LINE_END);
 
       grid = new JButton[4][4];
       setLayout(new BorderLayout());
@@ -58,6 +63,7 @@ public class GridPanel extends JPanel
          {
             grid[i][j] = new JButton();
             grid[i][j].setPreferredSize(new Dimension(150, 150));
+            grid[i][j].setFont(new Font(FONT, Font.BOLD, FONT_SIZE));
             gridPanel.add(grid[i][j]);
          }
       }
@@ -72,6 +78,11 @@ public class GridPanel extends JPanel
             grid[i][j].addKeyListener(listener); 
          }
       }
+   }
+
+   public void addNewGameListener(ActionListener listener)
+   {
+      newGame.addActionListener(listener);
    }
 
    public static void main(String[] args)

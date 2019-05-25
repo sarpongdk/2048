@@ -32,6 +32,11 @@ public class View extends JFrame
       panel.updateDisplay(grid);   
    }
 
+   public void addNewGameListener(ActionListener listener)
+   {
+      panel.addNewGameListener(listener);
+   }
+
    public static void main(String[] args)
    {
       View view = new View();

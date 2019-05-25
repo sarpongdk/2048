@@ -97,7 +97,8 @@ public class Model
          {
             if (grid[i][j] == grid[i-1][j])
             {
-               grid[i - 1][j] += grid[i][j];
+               grid[i-1][j] += grid[i][j];
+               score += grid[i-1][j];
                grid[i][j] = 0;
             }
             else if (grid[i-1][j] == 0)
@@ -118,6 +119,7 @@ public class Model
             if (grid[i][j] == grid[i+1][j])
             {   
                grid[i+1][j] += grid[i][j];
+               score += grid[i+1][j];
                grid[i][j] = 0;
             }   
             else if (grid[i+1][j] == 0)
@@ -138,6 +140,7 @@ public class Model
             if (grid[i][j] == grid[i][j - 1])
             {   
                grid[i][j-1] += grid[i][j];
+               score += grid[i][j-1];
                grid[i][j] = 0;
             }   
             else if (grid[i][j - 1] == 0)
@@ -158,6 +161,7 @@ public class Model
             if (grid[i][j] == grid[i][j+1])
             {   
                grid[i][j+1] += grid[i][j];
+               score += grid[i][j+1];
                grid[i][j] = 0;
             }   
             else if (grid[i][j+1] == 0)
@@ -172,5 +176,12 @@ public class Model
    public int[][] getGrid()
    {
       return grid;
+   }
+
+   public void reset()
+   {
+      score = 0;
+      initGrid();
+      initializeGame();
    }
 }

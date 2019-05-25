@@ -1,7 +1,7 @@
 import java.awt.event.*;
 import java.awt.*;
 
-public class Controller implements KeyListener
+public class Controller implements KeyListener, ActionListener
 {
    private Model model;
    private View view;
@@ -14,6 +14,7 @@ public class Controller implements KeyListener
       view = new View();
       view.updateDisplay(grid);
       view.addKeyPadListener(this);
+      view.addNewGameListener(this);
    }
 
    private void updateGame(KeyPressed keyPressed)
@@ -31,24 +32,22 @@ public class Controller implements KeyListener
       {
          case KeyEvent.VK_DOWN:
             updateGame(KeyPressed.DOWN);
-            System.out.println("Key Down");
             break;
    
          case KeyEvent.VK_UP:
-            System.out.println("Key Up");
             updateGame(KeyPressed.UP);
             break;
          
          case KeyEvent.VK_RIGHT:
-            System.out.println("Key Right");
             updateGame(KeyPressed.RIGHT);
             break;
          
          case KeyEvent.VK_LEFT:
-            System.out.println("Key Left");
             updateGame(KeyPressed.LEFT);
             break;
       }
+      
+      view.updateScore(model.getScore());
    }
 
    @Override
@@ -56,6 +55,14 @@ public class Controller implements KeyListener
    
    @Override
    public void keyReleased(KeyEvent e) {}
+
+   @Override
+   public void actionPerformed(ActionEvent e)
+   {
+      model.reset();
+      view.updateScore(model.getScore());
+      view.updateDisplay(model.getGrid());
+   }
 
    public static void main(String[] args)
    {
