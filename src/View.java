@@ -29,7 +29,7 @@ public class View extends JFrame
 
    public void updateDisplay(int[][] grid)
    {
-   
+      panel.updateDisplay(grid);   
    }
 
    public static void main(String[] args)

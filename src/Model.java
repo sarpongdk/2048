@@ -20,6 +20,20 @@ public class Model
       score = 0;
       state = State.PLAY;
       grid = new int[GRID_SIZE][GRID_SIZE];
+
+      initGrid();
+      initializeGame();
+   }
+
+   private void initGrid()
+   {
+      for (int i = 0; i < GRID_SIZE; i++)
+      {
+         for (int j = 0; j < GRID_SIZE; j++)
+         {
+            grid[i][j] = 0;
+         }
+      }
    }
 
    public int getScore()
@@ -37,7 +51,7 @@ public class Model
       state = State.GAME_OVER;
    }
 
-   public void initializeGame()
+   private void initializeGame()
    {
       generateTileValue();
       generateTileValue();

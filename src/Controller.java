@@ -9,7 +9,6 @@ public class Controller implements KeyListener
    public Controller()
    {
       model = new Model();
-      model.initializeGame();
       int[][] grid = model.getGrid();
 
       view = new View();

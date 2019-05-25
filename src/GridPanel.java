@@ -39,6 +39,17 @@ public class GridPanel extends JPanel
       this.score.setText("Score: " + Integer.toString(score));
    }
 
+   public void updateDisplay(int[][] grid)
+   {
+      for (int i = 0; i < GRID_SIZE; i++)
+      {
+         for (int j = 0; j < GRID_SIZE; j++)
+         {
+            this.grid[i][j].setText(Integer.toString(grid[i][j]));
+         }
+      }
+   }
+
    private void addButtons()
    {
       for (int i = 0; i < GRID_SIZE; i++)
