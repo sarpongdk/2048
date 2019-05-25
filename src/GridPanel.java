@@ -8,23 +8,26 @@ public class GridPanel extends JPanel
    private final int GRID_SIZE = 4;
    private final String FONT = "Arial";
    private final int FONT_SIZE = 26;
+   private final Color BG_COLOR = new Color(0xbbada0);
 
    private JButton[][] grid;
    private JLabel score;
    private JPanel scorePanel;
    private JPanel gridPanel;
    private JButton newGame;
+   private ColorPicker colorPicker;
 
    public GridPanel()
    {
       super();
       
+      colorPicker = new ColorPicker();
       gridPanel = new JPanel();
       gridPanel.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE, 15, 15));
-      gridPanel.setBackground(new Color(204, 206, 204));
+      gridPanel.setBackground(BG_COLOR);
       scorePanel = new JPanel();
       scorePanel.setLayout(new BorderLayout());
-      scorePanel.setBackground(new Color(204, 206, 204));
+      scorePanel.setBackground(BG_COLOR);
       score = new JLabel("Score: 0");
       newGame = new JButton("New Game");
       scorePanel.add(score);
@@ -36,7 +39,7 @@ public class GridPanel extends JPanel
       addButtons();
       add(gridPanel, BorderLayout.CENTER);
       add(scorePanel, BorderLayout.SOUTH); // todo: add score panel to the bottom
-      setBackground(new Color(204, 206, 204));
+      setBackground(BG_COLOR);
    }
 
    public void updateScore(int score)
@@ -50,7 +53,21 @@ public class GridPanel extends JPanel
       {
          for (int j = 0; j < GRID_SIZE; j++)
          {
-            this.grid[i][j].setText(Integer.toString(grid[i][j]));
+            if (grid[i][j] != 0)
+            {
+               int val = grid[i][j];
+               String str = Integer.toString(val);
+               this.grid[i][j].setText(str);
+            }
+            else
+            {
+               this.grid[i][j].setText("");
+            }
+
+            String key = this.grid[i][j].getText();
+            Color color = colorPicker.getColor(key);
+            System.out.println(color);
+            this.grid[i][j].setBackground(color);
          }
       }
    }
@@ -63,6 +80,7 @@ public class GridPanel extends JPanel
          {
             grid[i][j] = new JButton();
             grid[i][j].setPreferredSize(new Dimension(150, 150));
+            grid[i][j].setOpaque(true);
             grid[i][j].setFont(new Font(FONT, Font.BOLD, FONT_SIZE));
             gridPanel.add(grid[i][j]);
          }

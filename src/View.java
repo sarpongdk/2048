@@ -9,10 +9,12 @@ public class View extends JFrame
 
    public View()
    {
+      super("2048");
       panel = new GridPanel();
 
       add(panel);
       pack();
+      setResizable(false);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);
    }

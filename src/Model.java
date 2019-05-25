@@ -101,6 +101,12 @@ public class Model
                score += grid[i-1][j];
                grid[i][j] = 0;
             }
+
+            if (clearPath(i, j, KeyPressed.UP))
+            {
+               grid[GRID_SIZE - GRID_SIZE][j] = grid[i][j];
+               grid[i][j] = 0;
+            }
             else if (grid[i-1][j] == 0)
             {
                grid[i-1][j] = grid[i][j];
@@ -121,7 +127,13 @@ public class Model
                grid[i+1][j] += grid[i][j];
                score += grid[i+1][j];
                grid[i][j] = 0;
-            }   
+            }
+
+            if (clearPath(i, j, KeyPressed.DOWN))
+            {
+               grid[GRID_SIZE - 1][j] = grid[i][j];
+               grid[i][j] = 0;
+            }
             else if (grid[i+1][j] == 0)
             {   
                grid[i+1][j] = grid[i][j];
@@ -142,7 +154,13 @@ public class Model
                grid[i][j-1] += grid[i][j];
                score += grid[i][j-1];
                grid[i][j] = 0;
-            }   
+            }
+
+            if (clearPath(j, i, KeyPressed.LEFT))
+            {
+               grid[i][GRID_SIZE - GRID_SIZE] = grid[i][j];
+               grid[i][j] = 0;
+            }
             else if (grid[i][j - 1] == 0)
             {   
                grid[i][j-1] = grid[i][j];
@@ -163,7 +181,13 @@ public class Model
                grid[i][j+1] += grid[i][j];
                score += grid[i][j+1];
                grid[i][j] = 0;
-            }   
+            }
+
+            if (clearPath(j, i, KeyPressed.RIGHT))
+            {
+               grid[i][GRID_SIZE - 1] = grid[i][j];
+               grid[i][j] = 0;
+            }
             else if (grid[i][j+1] == 0)
             {   
                grid[i][j+1] = grid[i][j];
@@ -171,6 +195,60 @@ public class Model
             }   
          }   
       }
+   }
+
+   private boolean clearPath(int startingIndex, int col, KeyPressed key)
+   {
+      boolean clear = true;
+
+      switch (key)
+      {
+         case UP:
+            for (int i = startingIndex - 1; i >= 0; i--)
+            {
+               if (grid[i][col] != 0)
+               {
+                  clear = false;
+                  break;
+               }
+            }
+            break;
+
+         case DOWN:
+            for (int i = startingIndex + 1; i < GRID_SIZE; i++)
+            {
+               if (grid[i][col] != 0)
+               {
+                  clear = false;
+                  break;
+               }
+            }
+            break;
+
+         case RIGHT:
+            for (int j = startingIndex + 1; j < GRID_SIZE; j++)
+            {
+               if (grid[col][j] != 0)
+               {
+                  clear = false;
+                  break;
+               }
+            }
+            break;
+
+         case LEFT:
+            for (int j = startingIndex - 1; j >= 0; j--)
+            {
+               if (grid[col][j] != 0)
+               {
+                  clear = false;
+                  break;
+               }
+            }
+            break;
+      }
+
+      return clear;
    }
 
    public int[][] getGrid()
