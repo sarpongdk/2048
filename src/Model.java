@@ -46,16 +46,21 @@ public class Model
 
    private void initializeGame()
    {
-      generateTileValue();
-      generateTileValue();
+      generateNewTile();
+      generateNewTile();
    }
 
-   public void generateTileValue()
+   public void generateNewTile()
    {
       int i = rand.nextInt(tiles.length);
+      int row, col;
 
-      int row = rand.nextInt(GRID_SIZE);
-      int col = rand.nextInt(GRID_SIZE);
+      do 
+      {
+         row = rand.nextInt(GRID_SIZE);
+         col = rand.nextInt(GRID_SIZE);
+      }
+      while (grid[row][col] != 0);
       
       grid[row][col] = tiles[i];
    }
@@ -80,6 +85,8 @@ public class Model
             rightUpdate();
             break;
       }
+
+      generateNewTile();
    }
 
    private void upUpdate()
@@ -110,12 +117,12 @@ public class Model
          {   
             if (grid[i][j] == grid[i+1][j])
             {   
-               grid[i + 1][j] += grid[i][j];
+               grid[i+1][j] += grid[i][j];
                grid[i][j] = 0;
             }   
             else if (grid[i+1][j] == 0)
             {   
-               grid[i-1][j] = grid[i][j];
+               grid[i+1][j] = grid[i][j];
                grid[i][j] = 0;
             }   
          }   
@@ -130,12 +137,12 @@ public class Model
          {   
             if (grid[i][j] == grid[i][j - 1])
             {   
-               grid[i][j - 1] += grid[i][j];
+               grid[i][j-1] += grid[i][j];
                grid[i][j] = 0;
             }   
             else if (grid[i][j - 1] == 0)
             {   
-               grid[i][j - 1] = grid[i][j];
+               grid[i][j-1] = grid[i][j];
                grid[i][j] = 0;
             }   
          }   
@@ -148,14 +155,14 @@ public class Model
       {   
          for (int j = GRID_SIZE - 2; j >= 0; j--)
          {   
-            if (grid[i][j] == grid[i][j + 1])
+            if (grid[i][j] == grid[i][j+1])
             {   
-               grid[i][j + 1] += grid[i][j];
+               grid[i][j+1] += grid[i][j];
                grid[i][j] = 0;
             }   
-            else if (grid[i][j + 1] == 0)
+            else if (grid[i][j+1] == 0)
             {   
-               grid[i][j + 1] = grid[i][j];
+               grid[i][j+1] = grid[i][j];
                grid[i][j] = 0;
             }   
          }   
