@@ -16,6 +16,12 @@ public class Controller implements KeyListener
       view.addKeyPadListener(this);
    }
 
+   private void updateGame(KeyPressed keyPressed)
+   {
+      model.updateGrid(keyPressed);
+      view.updateDisplay(model.getGrid());
+   }
+
    @Override
    public void keyPressed(KeyEvent e)
    {
@@ -24,19 +30,23 @@ public class Controller implements KeyListener
       switch (code)
       {
          case KeyEvent.VK_DOWN:
+            updateGame(KeyPressed.DOWN);
             System.out.println("Key Down");
             break;
-
+   
          case KeyEvent.VK_UP:
             System.out.println("Key Up");
+            updateGame(KeyPressed.UP);
             break;
          
          case KeyEvent.VK_RIGHT:
             System.out.println("Key Right");
+            updateGame(KeyPressed.RIGHT);
             break;
          
          case KeyEvent.VK_LEFT:
             System.out.println("Key Left");
+            updateGame(KeyPressed.LEFT);
             break;
       }
    }
