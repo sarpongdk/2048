@@ -66,7 +66,6 @@ public class GridPanel extends JPanel
 
             String key = this.grid[i][j].getText();
             Color color = colorPicker.getColor(key);
-            System.out.println(color);
             this.grid[i][j].setBackground(color);
          }
       }
@@ -81,6 +80,7 @@ public class GridPanel extends JPanel
             grid[i][j] = new JButton();
             grid[i][j].setPreferredSize(new Dimension(150, 150));
             grid[i][j].setOpaque(true);
+            // grid[i][j].setContentAreaFilled(false);
             grid[i][j].setFont(new Font(FONT, Font.BOLD, FONT_SIZE));
             gridPanel.add(grid[i][j]);
          }

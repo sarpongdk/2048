@@ -1,7 +1,7 @@
 import java.awt.event.*;
 import java.awt.*;
 
-public class Controller implements KeyListener, ActionListener
+public class Controller extends WindowAdapter implements KeyListener, ActionListener
 {
    private Model model;
    private View view;
@@ -15,6 +15,7 @@ public class Controller implements KeyListener, ActionListener
       view.updateDisplay(grid);
       view.addKeyPadListener(this);
       view.addNewGameListener(this);
+      view.addWindowAdapterListener(this);
    }
 
    private void updateGame(KeyPressed keyPressed)
@@ -48,6 +49,13 @@ public class Controller implements KeyListener, ActionListener
       }
       
       view.updateScore(model.getScore());
+   }
+
+   @Override
+   public void windowClosing(WindowEvent e)
+   {
+      System.out.println("Saving game state!");
+      model.saveGameState();
    }
 
    @Override

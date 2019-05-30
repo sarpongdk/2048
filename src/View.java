@@ -39,6 +39,11 @@ public class View extends JFrame
       panel.addNewGameListener(listener);
    }
 
+   public void addWindowAdapterListener(WindowAdapter adapter)
+   {
+      addWindowListener(adapter);
+   }
+
    public static void main(String[] args)
    {
       View view = new View();

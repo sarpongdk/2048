@@ -1,11 +1,13 @@
-import java.util.Random;
+import java.io.*;
+
+import java.util.*;
 
 enum KeyPressed
 {
    UP, DOWN, LEFT, RIGHT
 };
 
-public class Model
+public class Model implements Serializable
 {
    private final int GRID_SIZE = 4;
    private final Random rand = new Random();
@@ -32,6 +34,54 @@ public class Model
             grid[i][j] = 0;
          }
       }
+   }
+
+   public void saveGameState() 
+   {
+      ArrayList<Object> data = new ArrayList<Object>();
+      data.add(grid);
+      data.add(score);
+
+      try
+      {
+         FileOutputStream fs = new FileOutputStream("../saves/state.ser");
+         ObjectOutputStream os = new ObjectOutputStream(fs);
+         os.writeObject(data);
+         fs.close();
+         os.close();
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+         return;
+      }
+   }
+
+   public void loadGameState()
+   {
+      ArrayList<Object> savedData = new ArrayList<Object>();
+
+      try
+      {
+         FileInputStream fs = new FileInputStream("../saves/state.ser");
+         ObjectInputStream os = new ObjectInputStream(fs);
+         savedData = (ArrayList<Object>) os.readObject();
+         fs.close();
+         os.close();
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+         return;
+      }
+      catch (ClassNotFoundException c)
+      {
+         c.printStackTrace();
+         return;
+      }
+
+      grid = (int[][]) savedData.get(0);
+      score = (int) savedData.get(1);
    }
 
    public int getScore()
