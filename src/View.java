@@ -10,6 +10,16 @@ public class View extends JFrame
    public View()
    {
       super("2048");
+      
+      try 
+      {
+         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      }
+      catch (Exception e) 
+      {
+         System.out.println("Look and Feel not set");
+      }
+
       panel = new GridPanel();
 
       add(panel);

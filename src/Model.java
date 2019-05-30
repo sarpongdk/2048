@@ -71,7 +71,7 @@ public class Model implements Serializable
       }
       catch (IOException e)
       {
-         e.printStackTrace();
+         System.err.println("Save file has been corrupted!");
          return;
       }
       catch (ClassNotFoundException c)
@@ -152,16 +152,9 @@ public class Model implements Serializable
                grid[i][j] = 0;
             }
 
-            if (clearPath(i, j, KeyPressed.UP))
-            {
-               grid[GRID_SIZE - GRID_SIZE][j] = grid[i][j];
-               grid[i][j] = 0;
-            }
-            else if (grid[i-1][j] == 0)
-            {
-               grid[i-1][j] = grid[i][j];
-               grid[i][j] = 0;
-            }
+            int[] index = clearPath(i, j, KeyPressed.UP);
+            grid[index[0]][index[1]] = grid[i][j];
+            grid[i][j] = 0;
          }
       }
    }
@@ -179,16 +172,9 @@ public class Model implements Serializable
                grid[i][j] = 0;
             }
 
-            if (clearPath(i, j, KeyPressed.DOWN))
-            {
-               grid[GRID_SIZE - 1][j] = grid[i][j];
-               grid[i][j] = 0;
-            }
-            else if (grid[i+1][j] == 0)
-            {   
-               grid[i+1][j] = grid[i][j];
-               grid[i][j] = 0;
-            }   
+            int[] index = clearPath(i, j, KeyPressed.DOWN);
+            grid[index[0]][index[1]] = grid[i][j];
+            grid[i][j] = 0;
          }   
       }
    }
@@ -206,16 +192,9 @@ public class Model implements Serializable
                grid[i][j] = 0;
             }
 
-            if (clearPath(j, i, KeyPressed.LEFT))
-            {
-               grid[i][GRID_SIZE - GRID_SIZE] = grid[i][j];
-               grid[i][j] = 0;
-            }
-            else if (grid[i][j - 1] == 0)
-            {   
-               grid[i][j-1] = grid[i][j];
-               grid[i][j] = 0;
-            }   
+            int[] index = clearPath(j, i, KeyPressed.LEFT);
+            grid[index[0]][index[1]] = grid[i][j];
+            grid[i][j] = 0;
          }   
       }
    }
@@ -233,23 +212,17 @@ public class Model implements Serializable
                grid[i][j] = 0;
             }
 
-            if (clearPath(j, i, KeyPressed.RIGHT))
-            {
-               grid[i][GRID_SIZE - 1] = grid[i][j];
-               grid[i][j] = 0;
-            }
-            else if (grid[i][j+1] == 0)
-            {   
-               grid[i][j+1] = grid[i][j];
-               grid[i][j] = 0;
-            }   
+            int[] index = clearPath(j, i, KeyPressed.RIGHT);
+            grid[index[0]][index[1]] = grid[i][j];
+            grid[i][j] = 0;
          }   
       }
    }
 
-   private boolean clearPath(int startingIndex, int col, KeyPressed key)
+   private int[] clearPath(int startingIndex, int col, KeyPressed key)
    {
-      boolean clear = true;
+      //boolean clear = true;
+      int[] index = new int[2];
 
       switch (key)
       {
@@ -258,8 +231,15 @@ public class Model implements Serializable
             {
                if (grid[i][col] != 0)
                {
-                  clear = false;
+                  //clear false;
+                  index[0] = i + 1;
+                  index[1] = col;
                   break;
+               }
+               else if (i == 0)
+               {
+                  index[0] = 0;
+                  index[1] = col;
                }
             }
             break;
@@ -269,8 +249,15 @@ public class Model implements Serializable
             {
                if (grid[i][col] != 0)
                {
-                  clear = false;
+                  index[0] = i - 1;
+                  index[1] = col;
+                  //clear = false;
                   break;
+               }
+               else if (i == GRID_SIZE - 1)
+               {
+                  index[0] = GRID_SIZE - 1;
+                  index[1] = col;
                }
             }
             break;
@@ -280,8 +267,15 @@ public class Model implements Serializable
             {
                if (grid[col][j] != 0)
                {
-                  clear = false;
+                  index[0] = col;
+                  index[1] = j - 1;
+                  //clear = false;
                   break;
+               }
+               else if (j == GRID_SIZE - 1)
+               {
+                  index[0] = col;
+                  index[1] = GRID_SIZE - 1;
                }
             }
             break;
@@ -291,14 +285,22 @@ public class Model implements Serializable
             {
                if (grid[col][j] != 0)
                {
-                  clear = false;
+                  index[0] = col;
+                  index[1] = j + 1;
+                  //clear = false;
                   break;
                }
+               else if (j == 0)
+               {
+                  index[0] = col;
+                  index[1] = 0;
+               }
+               
             }
             break;
       }
 
-      return clear;
+      return index;
    }
 
    public int[][] getGrid()

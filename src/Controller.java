@@ -9,6 +9,7 @@ public class Controller extends WindowAdapter implements KeyListener, ActionList
    public Controller()
    {
       model = new Model();
+      model.loadGameState();
       int[][] grid = model.getGrid();
 
       view = new View();
